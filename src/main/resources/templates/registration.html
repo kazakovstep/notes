@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <title>Регистрация</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+<h1 style="text-align: center; padding-top: 3%; font-size: 30pt" id="appName">Регистрация</h1>
+
+<form
+        method="post"
+        role="form"
+        th:action="@{/registration/save}"
+        th:object="${user}"
+>
+  <p th:errors = "*{name}" class="error"
+     th:if="${#fields.hasErrors('name')}"></p>
+  <p th:errors = "*{email}" class="error"
+     th:if="${#fields.hasErrors('email')}"></p>
+  <p th:errors = "*{password}" class="error"
+     th:if="${#fields.hasErrors('password')}"></p>
+  <p th:errors = "*{passwordsEquals}" class="error"
+     th:if="${#fields.hasErrors('passwordsEquals')}">Введите совпадающие пароли.</p>
+  <div class="Username"><input
+          placeholder="Имя пользователя"
+          class="Write"
+          name="username"
+          th:field="*{name}"
+          type="text"
+  />
+  </div>
+  <div class="Email">
+    <input
+            placeholder="E-mail"
+            class="Write"
+            name="email"
+            th:field="*{email}"
+            type="email"
+    />
+  </div>
+  <div class="Password">
+    <input
+            class="Write"
+            name="password"
+            placeholder="Придумайте пароль"
+            th:field="*{password}"
+            type="password"
+    />
+    <a class="question">?</a>
+  </div>
+  <div class="Password">
+    <input
+            class="Write"
+            name="password"
+            placeholder="Подтвердите пароль"
+            type="password"
+            th:field="*{passwordConfirm}"
+    />
+  </div>
+  <div class="EntryButton"><input class="Entry" type="submit" value="Регистрация"/></div>
+</form>
+</body>
+<style>
+  ::placeholder {
+    color: black;
+  }
+  input{
+    outline: none;
+  }
+  .error{
+    font-family: "Amatic SC";
+    color:red;
+    font-size: 20pt;
+    text-align: center;
+  }
+  .Write{
+    background-color: #c49c40;
+    font-family: "Amatic SC";
+    font-size: xx-large;
+    color: black;
+    width: 20%;
+    border-radius: 5%;
+  }
+  #appName{
+    font-family: 'Amatic SC';
+    font-size: 30pt;
+  }
+  .Username{
+    text-align: center;
+    font-family: 'Amatic SC';
+    font-size: 30pt;
+  }
+  .Password{
+    text-align: center;
+    font-family: 'Amatic SC';
+    font-size: 30pt;
+  }
+  .Email{
+    text-align: center;
+    font-family: 'Amatic SC';
+    font-size: 30pt;
+  }
+  .EntryButton{
+    margin-top: 1%;
+    text-align: center;
+    align-content: center;
+  }
+  .Entry{
+    background-color: #c49c40;
+    text-align: center;
+    font-family: 'Amatic SC';
+    font-size: 30pt;
+    cursor: pointer;
+    margin-top:1%;
+  }
+  .Entry:hover{
+    color:white;
+    background-color: #5d3e22;
+  }
+  body{
+    background: rgba(178, 154, 117, 0.94);
+  }
+  .question{
+    border: none;
+    border-radius: 100%;
+    position: absolute;
+    font-size: 20pt;
+    margin-left: 1%;
+    margin-top: 0.75%;
+    background-color: rgba(121, 94, 30, 0.4);
+    cursor: pointer;
+    width:2%
+  }
+  .question:hover{
+    color:white;
+  }
+</style>
+</html>

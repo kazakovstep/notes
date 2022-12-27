@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Notes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
+<body>
+<form th:action="@{/logout}" method="post">
+    <input class="Account" type="submit" th:href="@{login}" value="Сменить пользователя">
+</form>
+<h1 style="text-align: center; padding-top: 3%; font-size: 30pt" id="appName">Заметки</h1>
+    <div class="Block" id="noteBlock">
+        <textarea class="Title" rows="2" type="text" id="noteTitle" placeholder="Введите заголовок" oninput="auto_height(this)"></textarea>
+        <button class="Delete" id="closeButton" style="font-size: 15pt;">✖</button>
+        <textarea class="Content" placeholder="Введите текст" rows="1" id="noteContent" oninput="auto_height(this)"></textarea>
+        <button class="Send" id="sendButton">Добавить заметку</button>
+    </div>
+</body>
+<style>
+    .Account{
+        margin: 2% 80%;
+        font-family: 'Amatic SC';
+        position: absolute;
+        border: none;
+        background-color: #c49c40;
+        color: black;
+        padding: 12px 20px;
+        font-size: 20pt;
+        cursor: pointer;
+        border-radius: 4px;
+        text-decoration-line: none;
+        text-align: center;
+    }
+    .Account:hover {
+        background-color: #5d3e22;
+        color:white;
+    }
+    textarea {
+        border: none;
+        overflow: auto;
+        outline: none;
+
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+
+        resize: none;
+    }
+    .Delete{
+        border: none;
+        border-radius: 100%;
+        position: absolute;
+        padding:5% 7%;
+        top:3%;
+        right:5%;
+        z-index: 1;
+        background-color: rgba(121, 94, 30, 0.4);
+        cursor: pointer;
+    }
+    .Delete:hover {
+        background-color: #5d3e22;
+        color:white;
+    }
+    textarea:focus, input:focus{
+        outline: none;
+    }
+    ::placeholder {
+        color: black;
+    }
+    body{
+        font-family: 'Amatic SC';
+        background: rgba(178, 154, 117, 0.94);
+    }
+    #appName{
+        font-weight: bolder;
+        color: rgba(27, 28, 28, 0.99);
+    }
+    .Block{
+        position: relative;
+        display: inline-block;
+        margin-left: 13%;
+        margin-top: 5%;
+        border-radius: 5%;
+        background: #c49c40;
+    }
+    .Title{
+        padding-left:5%;
+        width: 75%;
+        font-family: 'Amatic SC';
+        background: transparent;
+        border: none;
+        display: block;
+        font-size: 35pt;
+    }
+    .Content{
+        padding-left:5%;
+        font-family: 'Amatic SC';
+        background: transparent;
+        border: none;
+        display: block;
+        font-size: 30pt;
+    }
+    .Send{
+        padding-left:5%;
+        font-family: 'Amatic SC';
+        background: transparent;
+        border: none;
+        display: block;
+        font-size: 30pt;
+        cursor: pointer;
+    }
+    .Send:hover{
+        color:white;
+    }
+</style>
+<script>
+    const url = 'http://localhost:8080/notes';
+    async function getData() {
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            let array = data.map(item => ({
+                id: item.id,
+                title: item.title,
+                content: item.content
+            }));
+            return array;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    var block = document.getElementById("noteBlock");
+    async function updateNotes() {
+        let notes = await getData();
+        notes.forEach(note => {
+            if (document.getElementById(`noteBlock${note.id}`)===null) {
+                var newBlock = block.cloneNode(true);
+                newBlock.id = `noteBlock${note.id}`;
+                newBlock.children[0].id=`noteTitle${note.id}`;
+                newBlock.childNodes.item(1).textContent = note.title;
+                newBlock.children[1].id=`closeButton${note.id}`;
+                newBlock.children[2].id=`noteContent${note.id}`;
+                newBlock.childNodes.item(5).textContent = note.content;
+                newBlock.children[3].id=`sendButton${note.id}`;
+                newBlock.children[3].textContent="Редактировать";
+                block.before(newBlock);
+            }
+        });
+    }
+
+    updateNotes();
+
+
+
+    function auto_height(elem) {  /* javascript */
+        elem.style.height = (elem.scrollHeight+elem.style.height)+"px";
+    }
+
+
+        document.addEventListener("click", async function (event) {
+            let id;
+            if (event.target.matches("button[id^='sendButton']")) {
+                id = event.target.id.replace("sendButton", "");
+                let noteTitle = document.getElementById(`noteTitle${id}`).value;
+                let noteContent = document.getElementById(`noteContent${id}`).value;
+                let data = {
+                    title: noteTitle,
+                    content: noteContent
+                };
+                if (id!=""){
+                    console.log(`PUT ${id}`);
+                    await fetch(`http://localhost:8080/notes/${id}`, {
+                        method: "PUT",
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify(data)
+                    });
+                } else {
+                    if(noteTitle!=''&&noteContent!='')
+                    {
+                        await fetch('http://localhost:8080/notes', {
+                            method: "POST",
+                            headers: {"Content-Type": "application/json"},
+                            body: JSON.stringify(data)
+
+                        });
+                        await updateNotes();
+                        document.getElementById(`noteTitle${id}`).value='';
+                        document.getElementById(`noteContent${id}`).value='';
+                    }
+                }
+            }
+            if (event.target.matches("button[id^='closeButton']")) {
+                id = event.target.id.replace("closeButton", "");
+                const deleted = document.getElementById(`noteBlock${id}`);
+                if (id != "") await deleted.remove();
+                await fetch(`http://localhost:8080/notes/${id}`, {
+                    method: "DELETE",
+                    headers: {"Content-Type": "application/json"}
+                });
+            }
+            await updateNotes();
+
+        });
+</script>
+
+</html>

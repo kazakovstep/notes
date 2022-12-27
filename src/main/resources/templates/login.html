@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Авторизация</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+<h1 style="text-align: center; padding-top: 3%; font-size: 30pt" id="appName">Авторизация</h1>
+
+<div th:if="${param.error}" style="font-family: 'Amatic SC'; text-align: center; font-size: 15pt; color:red;">
+    Некорректное имя пользователя или пароль.
+    Попробуйте снова.
+</div>
+<div th:if="${param.logout}" style="font-family: 'Amatic SC'; text-align: center; font-size: 15pt; color:green;">
+    Вы успешно вышли из аккаунта.
+</div>
+<form th:action="@{/login}" method="post">
+    <div class="Username"><input placeholder="E-mail" class="Write" type="text" name="username"/></div>
+    <div class="Password"><input placeholder="Пароль" class="Write" type="password" name="password"/></div>
+    <div class="EntryButton"><input class="Entry" type="submit" value="Войти"/></div>
+</form>
+<div class="EntryButton" style="font-family: 'Amatic SC'; font-size: 20pt;">Нет аккаунта? <a class="Registration" th:href="@{registration}">Зарегистрироваться</a></div>
+</body>
+<style>
+    ::placeholder {
+        color: black;
+    }
+    .Write{
+        background-color: #c49c40;
+        font-family: "Amatic SC";
+        font-size: xx-large;
+        color: black;
+        width: 20%;
+        border-radius: 5%;
+    }
+    #appName{
+        font-family: 'Amatic SC';
+        font-size: 30pt;
+    }
+    .Username{
+        text-align: center;
+        font-family: 'Amatic SC';
+        font-size: 30pt;
+    }
+    input{
+        outline: none;
+    }
+    .Password{
+        text-align: center;
+        font-family: 'Amatic SC';
+        font-size: 30pt;
+    }
+    .EntryButton{
+        margin-top: 1%;
+        text-align: center;
+        align-content: center;
+    }
+    .Entry{
+        background-color: #c49c40;
+        text-align: center;
+        font-family: 'Amatic SC';
+        font-size: 30pt;
+        cursor: pointer;
+        margin-top:1%;
+    }
+    .Entry:hover{
+        color:white;
+        background-color: #5d3e22;
+    }
+    .Registration{
+
+        font-family: 'Amatic SC';
+        text-decoration-line: underline;
+        font-size: 20pt;
+        color: black;
+    }
+    .Registration:hover{
+        color:white;
+    }
+    body{
+        background: rgba(178, 154, 117, 0.94);
+    }
+</style>
+</html>
