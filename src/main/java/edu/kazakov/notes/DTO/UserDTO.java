@@ -24,7 +24,7 @@ public class UserDTO
     @NotEmpty(message = "E-mail не должен быть пустым")
     private String email;
     @NotEmpty(message = "Пароль не должен быть пустым")
-    @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%.;?,!:]).{6,20})",
+    @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%.;?,!:]).{6,30})",
             message = "Введите корректный пароль")
     private String password;
     @NotEmpty(message = "Пароль не должен быть пустым")

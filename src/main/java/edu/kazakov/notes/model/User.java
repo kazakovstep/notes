@@ -19,6 +19,14 @@ public class User
 {
     private static final long serialVersionUID = 1L;
 
+    @Column(name = "verification_code", length = 64, nullable = false)
+    private String verificationCode;
+
+    private boolean enabled;
+
+    public boolean isEnabled() {
+        return this.enabled;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,4 +46,5 @@ public class User
             joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")},
             inverseJoinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")})
     private List<Role> roles = new ArrayList<>();
+
 }

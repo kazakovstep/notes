@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html lang="en">
+<link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
+<head>
+    <meta charset="UTF-8">
+    <title>Подтверждение регистрации</title>
+</head>
+<body>
+<div class="content">
+    <h1 style="padding-top: 3%; font-size: 30pt">Регистрация аккаунта</h1>
+    <div style="font-size: 25pt" th:inline="text"> Мы отправили на [[${user.getEmail()}]] письмо для подтверждения электронной почты.<br>
+        Подтвердите свой адрес, чтобы завершить регистрацию.</div>
+</div>
+</body>
+<style>
+    body{
+        background: rgba(178, 154, 117, 0.94);
+    }
+    .content{
+        text-align: center;
+        font-family: "Amatic SC";
+    }
+</style>
+</html>

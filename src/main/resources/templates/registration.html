@@ -46,7 +46,15 @@
             th:field="*{password}"
             type="password"
     />
-    <a class="question">?</a>
+    <a class="question">
+      ?
+      <div class="hidden">Пароль должен:<br>
+        • содержать от 6 до 30 символов<br>
+        • состоять из латинских букв<br>
+        • содержать хотя бы одну строчную и ЗАГЛАВНУЮ букву<br>
+        • содержать хотя бы один специальный символ
+      </div>
+    </a>
   </div>
   <div class="Password">
     <input
@@ -61,6 +69,19 @@
 </form>
 </body>
 <style>
+  .hidden{
+    display: none;
+  }
+  .question:hover .hidden{
+    display: inline-block;
+    position: absolute;
+    padding-left: 100%;
+    border: black;
+    color:black;
+    width: 1500%;
+    font-size: 15pt;
+    text-align: justify;
+  }
   ::placeholder {
     color: black;
   }

@@ -152,12 +152,13 @@
 
     updateNotes();
 
-
-
-    function auto_height(elem) {  /* javascript */
-        elem.style.height = (elem.scrollHeight+elem.style.height)+"px";
+    function auto_height(textarea) {
+        textarea.addEventListener("keyup", e =>{
+            textarea.style.height = "24px";
+            let scHeight = e.target.scrollHeight;
+            textarea.style.height = `${scHeight}px`;
+        });
     }
-
 
         document.addEventListener("click", async function (event) {
             let id;

@@ -9,10 +9,12 @@
 
 <div th:if="${param.error}" style="font-family: 'Amatic SC'; text-align: center; font-size: 15pt; color:red;">
     Некорректное имя пользователя или пароль.
-    Попробуйте снова.
 </div>
 <div th:if="${param.logout}" style="font-family: 'Amatic SC'; text-align: center; font-size: 15pt; color:green;">
     Вы успешно вышли из аккаунта.
+</div>
+<div th:if="${param.registration}" style="font-family: 'Amatic SC'; text-align: center; font-size: 15pt; color:green;">
+    Подтвердите адрес своей электронной почты. Проверьте спам!
 </div>
 <form th:action="@{/login}" method="post">
     <div class="Username"><input placeholder="E-mail" class="Write" type="text" name="username"/></div>
